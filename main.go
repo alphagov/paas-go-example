@@ -17,11 +17,11 @@ type Country struct {
     Name string `json:"name"`
 }
 
+var countries []Country
+
 func init() {
     register := getCountryRegister()
-    countries := parseCountries(register)
-
-    fmt.Printf(">>>>> %s\n", countries)
+    countries = parseCountries(register)
 }
 
 func getCountryRegister() []byte {
@@ -61,6 +61,8 @@ func handlerRoot(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+    fmt.Printf(">>>>> %s\n", countries)
+
     port := os.Getenv("PORT")
 
     http.HandleFunc("/", handlerRoot)
