@@ -18,15 +18,28 @@ type Country struct {
 }
 
 func init() {
-    countries := readCountries()
+    register := getCountryRegister()
+    countries := parseCountries(register)
+
     fmt.Printf(">>>>> %s\n", countries)
 }
 
-func readCountries() []Country {
-    raw, _ := ioutil.ReadFile("./countries.json")
+func getCountryRegister() []byte {
+    response, err := http.Get("https://country.register.gov.uk/records.json?page-index=1&page-size=999")
+    if err != nil {
+        log.Fatal(err)
+        os.Exit(1)
+    }
 
+    defer response.Body.Close()
+    register, _ := ioutil.ReadAll(response.Body)
+
+    return register
+}
+
+func parseCountries(register []byte) []Country {
     var records map[string]Record
-    json.Unmarshal(raw, &records)
+    json.Unmarshal(register, &records)
 
     var countries []Country
     for _, record := range records {
