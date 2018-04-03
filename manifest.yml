@@ -1,0 +1,7 @@
+---
+applications:
+- name: paas-go-example
+  memory: 128M
+  instances: 1
+  command: ./main
+  buildpack: binary_buildpack
