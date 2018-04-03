@@ -7,6 +7,7 @@ import (
     "log"
     "net/http"
     "os"
+    "strings"
 )
 
 type Record struct {
@@ -49,6 +50,30 @@ func parseCountries(register []byte) []Country {
     return countries;
 }
 
+func matchLetters(letters string) []Country {
+    var matched = countries
+
+    for _, letter := range letters {
+        matched = matchLetter(matched, letter)
+    }
+
+    return matched
+}
+
+func matchLetter(countries []Country, letter rune) []Country {
+    var matched []Country
+
+    for _, country := range countries {
+        name := strings.ToLower(country.Name)
+
+        if strings.Contains(name, string(letter)) {
+            matched = append(matched, country)
+        }
+    }
+
+    return matched
+}
+
 func handlerRoot(w http.ResponseWriter, r *http.Request) {
     queries := r.URL.Query()
     name := queries.Get("name")
@@ -61,7 +86,8 @@ func handlerRoot(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-    fmt.Printf(">>>>> %s\n", countries)
+    c := matchLetters("bzis")
+    fmt.Printf(">>>>> %s\n", c)
 
     port := os.Getenv("PORT")
 
