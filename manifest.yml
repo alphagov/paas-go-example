@@ -7,3 +7,5 @@ applications:
   env:
       GOPACKAGENAME: paas-go-example
       GOVERSION: go1.9.4
+  services:
+      - logit-drain-go-example
