@@ -7,6 +7,7 @@ import (
     "log"
     "net/http"
     "os"
+    "sort"
     "strings"
 )
 
@@ -78,6 +79,10 @@ func handlerRoot(w http.ResponseWriter, r *http.Request) {
     queries := r.URL.Query()
     letters := queries.Get("letters")
     matches := matchLetters(letters)
+
+    sort.Slice(matches, func(i int, j int) bool {
+        return matches[i].Name < matches[j].Name
+    })
 
     fmt.Fprintf(w, "Matched countries: %s", matches)
 }
