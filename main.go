@@ -76,6 +76,22 @@ func matchLetter(countries []Country, letter rune) []Country {
 }
 
 func handlerRoot(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+    fmt.Fprintf(w, `Examples:<ul>
+        <li><a href="/?letters=uk">?letters=uk</a></li>
+        <li><a href="/?letters=ab">?letters=ab</a></li>
+        <li><a href="/?letters=z">?letters=z</a></li>
+        <li><a href="/?letters=spi">?letters=spi</a></li>
+        <li><a href="/">All countries</a></li>
+    </ul>
+
+    This is an example Go application that uses GOV.UK
+    Registers to lookup countries that contain some given letters.
+
+    <br/><br/>
+    <a href="https://github.com/alphagov/paas-go-example">GitHub Repository</a>`)
+
     queries := r.URL.Query()
     letters := queries.Get("letters")
     matches := matchLetters(letters)
@@ -84,7 +100,7 @@ func handlerRoot(w http.ResponseWriter, r *http.Request) {
         return matches[i].Name < matches[j].Name
     })
 
-    fmt.Fprintf(w, "Matched countries: %s", matches)
+    fmt.Fprintf(w, "<h2>Matched countries:</h2> <p>%s</p>", matches)
 }
 
 func main() {
