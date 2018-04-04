@@ -9,6 +9,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/justinas/alice"
+  packages = ["."]
+  revision = "03f45bd4b7dad4734bc4620e46a35789349abb20"
+
+[[projects]]
+  branch = "master"
   name = "github.com/morhekil/mw"
   packages = [
     ".",
@@ -20,6 +26,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8233a4d7a0bbef2d59a5c0e04e5f0f6ac51129f2272408887d101db138494b83"
+  inputs-digest = "94b5ee63c6ed9052d8dea6634f6a04dc916d18482e88c37c4d3f448aebf17e6b"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -2,9 +2,11 @@ package server
 
 import (
     "fmt"
+    "log"
     "net/http"
     "sort"
 
+    "github.com/justinas/alice"
     "github.com/morhekil/mw"
 
     "github.com/alphagov/paas-go-example/matching"
@@ -14,9 +16,12 @@ func RunServer(port string) {
     app := http.NewServeMux()
     app.HandleFunc("/", handlerRoot)
 
-    http.ListenAndServe(":" + port,
-        mw.Chaotic("/chaotic")(app),
-    )
+    middlewares := alice.New(
+        mw.Logger,
+        mw.Chaotic("/chaotic"),
+    ).Then(app)
+
+    http.ListenAndServe(":" + port, middlewares)
 }
 
 func handlerRoot(w http.ResponseWriter, r *http.Request) {
@@ -39,6 +44,8 @@ func handlerRoot(w http.ResponseWriter, r *http.Request) {
     queries := r.URL.Query()
     letters := queries.Get("letters")
     matches := matching.MatchLetters(letters)
+
+    log.Printf("%s requested %s", r.RemoteAddr, r.URL)
 
     sort.Slice(matches, func(i int, j int) bool {
         return matches[i].Name < matches[j].Name
