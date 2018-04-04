@@ -1,7 +1,7 @@
 ---
 applications:
 - name: paas-go-example
-  memory: 128M
+  memory: 20M
   instances: 1
   buildpack: go_buildpack
   env:
