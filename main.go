@@ -76,19 +76,13 @@ func matchLetter(countries []Country, letter rune) []Country {
 
 func handlerRoot(w http.ResponseWriter, r *http.Request) {
     queries := r.URL.Query()
-    name := queries.Get("name")
+    letters := queries.Get("letters")
+    matches := matchLetters(letters)
 
-    if len(queries.Get("name")) > 0 {
-        fmt.Fprintf(w, "Hello, %s", name)
-    } else {
-        fmt.Fprintf(w, "name cannot be blank")
-    }
+    fmt.Fprintf(w, "Matched countries: %s", matches)
 }
 
 func main() {
-    c := matchLetters("bzis")
-    fmt.Printf(">>>>> %s\n", c)
-
     port := os.Getenv("PORT")
 
     http.HandleFunc("/", handlerRoot)
