@@ -11,6 +11,7 @@
   branch = "master"
   name = "github.com/morhekil/mw"
   packages = [
+    ".",
     "chaotic",
     "chaotic/bindata"
   ]
@@ -19,6 +20,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5fcf78da55c67c09809c9709e6c6630c17ddd1d4ed6e686216bc5db74276e180"
+  inputs-digest = "8233a4d7a0bbef2d59a5c0e04e5f0f6ac51129f2272408887d101db138494b83"
   solver-name = "gps-cdcl"
   solver-version = 1
