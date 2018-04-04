@@ -9,6 +9,8 @@ import (
     "os"
     "sort"
     "strings"
+
+    "github.com/morhekil/mw"
 )
 
 type Record struct {
@@ -106,6 +108,10 @@ func handlerRoot(w http.ResponseWriter, r *http.Request) {
 func main() {
     port := os.Getenv("PORT")
 
-    http.HandleFunc("/", handlerRoot)
-    log.Fatal(http.ListenAndServe(":" + port, nil))
+    app := http.NewServeMux()
+    app.HandleFunc("/", handlerRoot)
+
+    http.ListenAndServe(":" + port,
+        mw.Chaotic("/chaotic")(app),
+    )
 }
