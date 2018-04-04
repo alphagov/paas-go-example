@@ -19,3 +19,17 @@ func TestMatchLetter(t *testing.T) {
         t.Error("Expected ", expected, " got ", actual)
     }
 }
+
+func TestMatchLetterNull(t *testing.T) {
+    uk := Country{ Name: "United Kingdom" }
+    spain := Country{ Name: "Spain" }
+    france := Country{ Name: "France" }
+
+    var countries = []Country { uk, spain, france }
+
+    actual := matchLetter(countries, 'q')
+
+    if len(actual) > 0 {
+        t.Error("Expected an empty array but ", " got ", actual)
+    }
+}
