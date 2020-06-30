@@ -3,9 +3,10 @@ applications:
 - name: paas-go-example
   memory: 20M
   instances: 1
-  buildpack: go_buildpack
+  buildpacks:
+    - go_buildpack
   env:
-      GOPACKAGENAME: paas-go-example
-      GOVERSION: go1.9.4
+      GOPACKAGENAME: github.com/alphagov/paas-go-example
+      GOVERSION: go1.13
   services:
       - logit-drain-go-example
